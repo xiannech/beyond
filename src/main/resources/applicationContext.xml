@@ -73,4 +73,5 @@
     </bean>
     <tx:annotation-driven transaction-manager="transactionManager" />
 
+	<import resource="classpath:quartz.xml"/>
 </beans>

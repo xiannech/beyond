@@ -19,7 +19,7 @@ public class TestController {
 	@RequestMapping("getUserInfo")
 	public ModelAndView getUserInfo(HttpServletRequest request){
 		ModelAndView mav = new ModelAndView();
-		LabelLibrary label = labelService.getLabelInfo(54);
+		LabelLibrary label = labelService.getLabelInfo(64);
 		mav.addObject("name", label.getLabelName());
 		mav.setViewName("page/test");
 		return mav;

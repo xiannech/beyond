@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- 需要调度的类 -->
+    <bean id="autoSuperviseJobBean" class="com.service.quartz.AutoSuperviseJob" />
+    <!-- 配置任务 -->
+	<bean id="quartzTestJob" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<!-- 调度的类 -->
+		<property name="targetObject" ref="autoSuperviseJobBean"></property>
+		<!-- 调度的方法 -->
+		<property name="targetMethod" value="quartzTest"></property>
+	</bean>
+	<!-- 为任务配置触发器 -->
+    <bean id="quartzTestJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="quartzTestJob"/>
+        <!-- 每天3点开始5分钟执行一次 -->
+        <property name="cronExpression" value="0/3 * * * * ?" />
+        <!-- <property name="cronExpression" value="0 0/5 * * * ?" /> -->
+    </bean>
+   <!--  配置调度类 -->
+    <bean id="onlineStudyGameScheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <!--  -->
+                <ref bean="quartzTestJobTrigger" />
+            </list>
+        </property>
+    </bean>
+
+</beans>
